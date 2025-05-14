@@ -1,4 +1,4 @@
- import pygame
+import pygame
 import random
 import sys
 import os
@@ -35,7 +35,7 @@ dano_tiro = 5
 
 # Carregar a imagem do fundo
 try:
-    fundo = pygame.image.load(os.path.join(imagens_path, "fundo.png.jpg"))
+    fundo = pygame.image.load(os.path.join(imagens_path, "  "))
     fundo = pygame.transform.scale(fundo, (largura, altura))
 except:
     print("Erro: Não foi possível carregar a imagem de fundo.")

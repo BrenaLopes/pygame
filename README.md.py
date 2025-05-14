@@ -1,4 +1,4 @@
- import pygame
+import pygame
 import random
 import sys
 import os
@@ -35,7 +35,7 @@ dano_tiro = 5
 
 # Carregar a imagem do fundo
 try:
-    fundo = pygame.image.load(os.path.join(imagens_path, "fundo.png.jpg"))
+    fundo = pygame.image.load(os.path.join(imagens_path, "CasteloHP.jpg"))
     fundo = pygame.transform.scale(fundo, (largura, altura))
 except:
     print("Erro: Não foi possível carregar a imagem de fundo.")
@@ -43,7 +43,7 @@ except:
 
 # Carregar a imagem do bruxo (jogador)
 try:
-    bruxo_imagem = pygame.image.load(os.path.join(imagens_path, "bruxo.png.png")).convert_alpha()
+    bruxo_imagem = pygame.image.load(os.path.join(imagens_path, "Harry Potter")).convert_alpha()
     bruxo_imagem = pygame.transform.scale(bruxo_imagem, (60, 60))
 except:
     print("Erro: Não foi possível carregar a imagem do bruxo.")
