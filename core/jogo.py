@@ -3,7 +3,7 @@ import time
 import random
 from config import *
 from core.jogador import Jogador
-from core.vilao import Vilao
+from core.vilao import Vilao, VilaoForte
 from core.projeto import Projeto, TiroVilao
 from core.imagens import carregar_fundo, carregar_personagem, carregar_tiro
 from core.moeda import Moeda
@@ -29,6 +29,7 @@ def executar_jogo():
     img_tiro = carregar_tiro()
     img_vilao = carregar_personagem("vilao.png.jpg", tamanho=(50, 50))
     img_moeda = carregar_personagem("moeda.png", tamanho=(30, 30))
+    img_vilao_forte = carregar_personagem("vilao_forte.gif", tamanho = (70,70))
 
 
     fonte = pygame.font.SysFont("Arial", 24)
@@ -40,13 +41,15 @@ def executar_jogo():
     cadencia_tiro = 2
     ultimo_tiro = time.time()
     start_time = time.time()
-    tempo_para_viloes_atirarem = 50   #segundos
+    tempo_para_viloes_atirarem = 50 
+    tempo_para_viloes_fortes = tempo_para_viloes_atirarem + 40  #segundos
     invulneravel_ate = start_time + 10
     tempo_para_moedas = 10 #as moedas aparecem depois de n segundos
     moedas = []
     moedas_criadas = False
     moedas_coletadas = 0
     tempo_para_atirar = 20 #segundos de espera antes de liberar os tiros
+    viloes_fortes = []
 
     rodando = True
     while rodando:
@@ -69,7 +72,13 @@ def executar_jogo():
             novo_vilao.vel_x = max(-12, -3 - pontuacao // 50)
             viloes.append(novo_vilao)
 
-        for vilao in viloes[:]:
+        # Fora do if acima:
+        if time.time() - start_time >= tempo_para_viloes_fortes:
+            if len(viloes_fortes) < 2:
+                viloes_fortes.append(VilaoForte(img_vilao_forte))  # usa img_vilao_forte correto aqui
+
+
+        for vilao in viloes + viloes_fortes:
             for moeda in moedas[:]:
                 moeda.mover()
                 if moeda.rect.right < 0:
@@ -100,11 +109,19 @@ def executar_jogo():
 
             for feitiço in feitiços[:]:
                 if vilao.rect.colliderect(feitiço.rect):
-                    viloes.remove(vilao)
                     feitiços.remove(feitiço)
-                    pontuacao += 10
-                    viloes.append(Vilao(img_vilao))
+                    vilao.vida -= 1
+
+                    if vilao.vida <= 0:
+                        if vilao in viloes:
+                            viloes.remove(vilao)
+                            viloes.append(Vilao(img_vilao))
+                        elif vilao in viloes_fortes:
+                            viloes_fortes.remove(vilao)
+                            viloes_fortes.append(VilaoForte(img_vilao_forte))
+                        pontuacao += 10
                     break
+
         ultimo_tiro = time.time()
 
 
