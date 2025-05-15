@@ -3,7 +3,7 @@ import random
 from config import LARGURA, ALTURA
 
 class Vilao:
-    def __init__(self, imagem):
+    def __init__(self, imagem, vida =1):
         self.imagem = imagem
         self.largura = 50
         self.altura = 50
@@ -11,6 +11,7 @@ class Vilao:
         self.y = random.randint(0, ALTURA - self.altura)
         self.vel_x = random.randint(-8,-5) #vilão vem da direita para esquerda 
         self.rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
+        self.vida = vida
 
     def mover(self):
         self.rect.x += self.vel_x

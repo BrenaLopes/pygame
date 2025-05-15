@@ -29,7 +29,7 @@ def executar_jogo():
     img_tiro = carregar_tiro()
     img_vilao = carregar_personagem("vilao.png.jpg", tamanho=(50, 50))
     img_moeda = carregar_personagem("moeda.png", tamanho=(30, 30))
-    img_vilao_forte = carregar_personagem("vilao_forte.gif", tamanho = (70,70))
+    img_vilao_forte = carregar_personagem("vilao_forte.gif", tamanho = (100,100))
 
 
     fonte = pygame.font.SysFont("Arial", 24)
@@ -42,7 +42,7 @@ def executar_jogo():
     ultimo_tiro = time.time()
     start_time = time.time()
     tempo_para_viloes_atirarem = 50 
-    tempo_para_viloes_fortes = tempo_para_viloes_atirarem + 40  #segundos
+    tempo_para_viloes_fortes = tempo_para_viloes_atirarem + 20  #segundos
     invulneravel_ate = start_time + 10
     tempo_para_moedas = 10 #as moedas aparecem depois de n segundos
     moedas = []
@@ -96,16 +96,23 @@ def executar_jogo():
                 if time.time() >= invulneravel_ate:
                     jogador.vida -= 10
                 
-                viloes.remove(vilao)
-                viloes.append(Vilao(img_vilao))
-                
+                if vilao in viloes:
+                    viloes.remove(vilao)
+                    viloes.append(Vilao(img_vilao))
+                elif vilao in viloes_fortes:
+                    viloes_fortes.remove(vilao)
+                    viloes_fortes.append(VilaoForte(img_vilao_forte))
 
                 if jogador.vida <= 0:
                     rodando = False
 
             if vilao.rect.right < 0:
-                viloes.remove(vilao)
-                viloes.append(Vilao(img_vilao))    #cria um novo vilao
+                if vilao in viloes:
+                    viloes.remove(vilao)
+                    viloes.append(Vilao(img_vilao))
+                elif vilao in viloes_fortes:
+                    viloes_fortes.remove(vilao)
+                    viloes_fortes.append(VilaoForte(img_vilao_forte))
 
             for feitiço in feitiços[:]:
                 if vilao.rect.colliderect(feitiço.rect):
@@ -145,7 +152,8 @@ def executar_jogo():
 
         tela.blit(fundo, (0, 0))
         jogador.desenhar(tela)
-        for v in viloes: v.desenhar(tela)
+        for v in viloes + viloes_fortes:
+            v.desenhar(tela)
         for f in feitiços: f.desenhar(tela, img_tiro)
         for t in tiros_vilao: pygame.draw.rect(tela, AMARELO, t.rect)
 
