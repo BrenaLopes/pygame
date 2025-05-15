@@ -2,16 +2,15 @@ import pygame
 import random
 from config import LARGURA, ALTURA
 
-class Vilao:
+class Moeda: 
     def __init__(self, imagem):
         self.imagem = imagem
-        self.largura = 50
-        self.altura = 50
-        self.x = random.randint(LARGURA, LARGURA  + 300)
-        self.y = random.randint(0, ALTURA - self.altura)
-        self.vel_x = random.randint(-8,-5) #vilão vem da direita para esquerda 
+        self.largura = 30
+        self.altura = 30
+        self.x = random.randint(LARGURA, LARGURA + 300)
+        self.y = random.randint(50, ALTURA - 50)
+        self.vel_x = random.randint(-4, -2)
         self.rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
-
     def mover(self):
         self.rect.x += self.vel_x
 

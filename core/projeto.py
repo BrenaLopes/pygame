@@ -11,7 +11,10 @@ class Projeto:
     def desenhar(self, tela, imagem):
         tela.blit(imagem, (self.rect.x, self.rect.y))
 
-class TiroVilao(Projeto):
+class TiroVilao:
     def __init__(self, x, y):
-        super().__init__(x, y, largura=10, altura=5, velocidade=5)
-        self.velocidade *= -1
+        self.rect = pygame.Rect(x, y, 10,5)
+        self.vel_x = -10
+
+    def mover(self):
+        self.rect.x += self.vel_x
