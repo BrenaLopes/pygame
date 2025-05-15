@@ -48,6 +48,8 @@ def executar_jogo():
     moedas = []
     moedas_criadas = False
     moedas_coletadas = 0
+    cura_a_cada = 10
+    moedas_para_curar = cura_a_cada
     tempo_para_atirar = 20 #segundos de espera antes de liberar os tiros
     viloes_fortes = []
 
@@ -86,6 +88,10 @@ def executar_jogo():
                 elif jogador.rect.colliderect(moeda.rect):
                     moedas.remove(moeda)
                     moedas_coletadas += 1
+
+                    if moedas_coletadas >= moedas_para_curar:
+                        jogador.vida = min(100, jogador.vida + 20)
+                        moedas_para_curar += cura_a_cada
             vilao.mover()
             if time.time() - start_time >= tempo_para_viloes_atirarem:
                 if random.random() < 0.01:
