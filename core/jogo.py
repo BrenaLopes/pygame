@@ -138,13 +138,15 @@ def executar_jogo():
         texto_moedas = fonte.render(f'Pomos de ouro:  {moedas_coletadas}', True, AMARELO)
         largura_texto = texto_moedas.get_width()
         tela.blit(texto_moedas, (LARGURA - largura_texto -10,10))
+        fonte_aviso = pygame.font.SysFont("Arial", 28, bold=True)
 
         for moeda in moedas:
             moeda.desenhar(tela)
 
         if moedas_coletadas< 5:
-            aviso = fonte.render(f' Pegue {5 - moedas_coletadas}pomos de ouro para atirar!', True, AMARELO)
-            tela.blit(aviso, (LARGURA//2 - 150, ALTURA - 40))
+            texto = f' Pegue {5 - moedas_coletadas} pomos de ouro para atirar!'
+            aviso = fonte_aviso.render(texto, True, DOURADO)
+            tela.blit(aviso, ((LARGURA- aviso.get_width())//2, ALTURA - 40))
 
         pygame.display.flip()
         clock.tick(FPS)
