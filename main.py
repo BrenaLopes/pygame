@@ -9,7 +9,4 @@ if __name__ == "__main__":
 
     
 
-if __name__ == "__main__":
-    nome = tela_inicial()
-    print(f"[DEBUG] Nome digitado: {nome}")
-    executar_jogo(nome)
+ 

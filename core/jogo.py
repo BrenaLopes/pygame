@@ -32,7 +32,7 @@ def executar_jogo(nome_jogador):
     # Imagens
     img_bruxo = carregar_personagem("Harry_Potter.png")
     img_tiro = carregar_tiro()
-    img_vilao = carregar_personagem("vilao.png.jpg", tamanho=(50, 50))
+    img_vilao = carregar_personagem("vilao.png", tamanho=(50, 50))
     img_moeda = carregar_personagem("moeda.png", tamanho=(30, 30))
     img_vilao_forte = carregar_personagem("vilao_forte.gif", tamanho = (100,100))
 
@@ -203,7 +203,12 @@ def executar_jogo(nome_jogador):
             aviso = fonte_aviso.render(f'Pegue {5 - moedas_coletadas} pomos de ouro para atirar!', True, DOURADO)
             tela.blit(aviso, ((LARGURA - aviso.get_width()) // 2, ALTURA - 40))
 
+        
         pygame.display.flip()
 
-    print(f"[DEBUG] Tempo: {int(tempo_jogo)}s | Vida: {jogador.vida} | Moedas: {moedas_coletadas}")
+    from core.ranking import salvar_pontuacao, exibir_ranking
+    salvar_pontuacao(nome_jogador, pontuacao)
     pygame.quit()
+    exibir_ranking()
+
+    
