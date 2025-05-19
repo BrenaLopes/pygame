@@ -18,10 +18,12 @@ def desenhar_barra_vida(tela, vida):
     pygame.draw.rect(tela, VERMELHO, (10, 40, largura_barra, altura_barra))
     pygame.draw.rect(tela, VERDE, (10, 40, preenchimento, altura_barra))
 
-def executar_jogo():
+def executar_jogo(nome_jogador):
     pygame.init()
     tela = pygame.display.set_mode((LARGURA, ALTURA))
     pygame.display.set_caption("Bruxo Invaders")
+
+
     clock = pygame.time.Clock()
 
     fundo = carregar_fundo()
@@ -48,13 +50,14 @@ def executar_jogo():
     moedas = []
     moedas_criadas = False
     moedas_coletadas = 0
-    cura_a_cada = 10
+    cura_a_cada = 10     
     moedas_para_curar = cura_a_cada
     tempo_para_atirar = 20 #segundos de espera antes de liberar os tiros
     viloes_fortes = []
 
     rodando = True
     while rodando:
+        clock.tick(100)
         if time.time() - start_time >= tempo_para_moedas:
             if random.random() < 0.02:
                 moedas.append(Moeda(img_moeda))
