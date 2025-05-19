@@ -24,3 +24,5 @@ class VilaoForte(Vilao):
     def __init__(self, imagem):
         super().__init__(imagem, vida = 5)
         self.vel_x = -4 
+
+

@@ -2,7 +2,7 @@ import pygame
 import os
 from config import IMAGENS_PATH, LARGURA, ALTURA
 
-def carregar_fundo(nome_arquivo = "CasteloHP.jpg"):
+def carregar_cenario(nome_arquivo):
     caminho = os.path.join(IMAGENS_PATH, nome_arquivo)
     imagem = pygame.image.load(caminho)
     return pygame.transform.scale(imagem, (LARGURA, ALTURA))
