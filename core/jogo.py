@@ -32,9 +32,10 @@ def executar_jogo(nome_jogador):
     # Imagens
     img_bruxo = carregar_personagem("Harry_Potter.png")
     img_tiro = carregar_tiro()
-    img_vilao = carregar_personagem("vilao.png", tamanho=(50, 50))
+    img_vilao = carregar_personagem("vilao.png.jpg", tamanho=(50, 50))
     img_moeda = carregar_personagem("moeda.png", tamanho=(30, 30))
-    img_vilao_forte = carregar_personagem("vilao_forte.png", tamanho=(100, 100))
+    img_vilao_forte = carregar_personagem("vilao_forte.gif", tamanho = (100,100))
+
 
     fonte = pygame.font.SysFont("Arial", 24)
     fonte_aviso = pygame.font.SysFont("Arial", 28, bold=True)
