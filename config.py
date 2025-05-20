@@ -1,8 +1,8 @@
 import os
 
 # TELA
-LARGURA = 1200
-ALTURA = 600
+LARGURA = 1500
+ALTURA = 700
 FPS = 30
 
 # CORES

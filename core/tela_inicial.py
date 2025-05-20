@@ -18,7 +18,7 @@ def tela_inicial():
     fundo = pygame.transform.scale(fundo, (LARGURA, ALTURA))
 
     fonte = pygame.font.SysFont("Courier New", 28)
-    input_box = pygame.Rect(720, 555, 300, 40)
+    input_box = pygame.Rect(670, 555, 300, 40)
     cor_input_ativa = pygame.Color("white")
     cor_input_inativa = pygame.Color("gray")
     cor_input = cor_input_inativa
