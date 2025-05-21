@@ -8,7 +8,7 @@ class Jogador:
         self.altura = 60
         self.x = 20
         self.y = ALTURA // 2
-        self.velocidade = 5
+        self.velocidade = 7
         self.vida = 100
         self.rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
 

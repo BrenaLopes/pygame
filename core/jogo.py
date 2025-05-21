@@ -32,8 +32,8 @@ def executar_jogo(nome_jogador):
     # Imagens
     img_bruxo = carregar_personagem("Harry_Potter.png")
     img_tiro = carregar_tiro()
-    img_vilao = carregar_personagem("vilao.png", tamanho=(50, 50))
-    img_moeda = carregar_personagem("moeda.png", tamanho=(30, 30))
+    img_vilao = carregar_personagem("vilao.png", tamanho=(80, 80))
+    img_moeda = carregar_personagem("moeda.png", tamanho=(40, 40))
     img_vilao_forte = carregar_personagem("vilao_forte.gif", tamanho = (100,100))
 
 
@@ -53,7 +53,7 @@ def executar_jogo(nome_jogador):
     cura_a_cada = 10
 
     start_time = time.time()
-    tempo_para_moedas = 10
+    tempo_para_moedas = 7
     tempo_para_atirar = 20
     tempo_para_viloes_atirarem = 50
     tempo_para_viloes_fortes = tempo_para_viloes_atirarem + 20
