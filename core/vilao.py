@@ -5,8 +5,8 @@ from config import LARGURA, ALTURA
 class Vilao:
     def __init__(self, imagem, vida =1):
         self.imagem = imagem
-        self.largura = 50
-        self.altura = 50
+        self.largura = 80
+        self.altura = 80
         self.x = random.randint(LARGURA, LARGURA  + 300)
         self.y = random.randint(0, ALTURA - self.altura)
         self.vel_x = random.randint(-8,-5) #vilão vem da direita para esquerda 

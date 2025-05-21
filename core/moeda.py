@@ -9,7 +9,7 @@ class Moeda:
         self.altura = 30
         self.x = random.randint(LARGURA, LARGURA + 300)
         self.y = random.randint(50, ALTURA - 50)
-        self.vel_x = random.randint(-4, -2)
+        self.vel_x = random.randint(-8, -6)
         self.rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
     def mover(self):
         self.rect.x += self.vel_x

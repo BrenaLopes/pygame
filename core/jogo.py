@@ -138,10 +138,11 @@ def executar_jogo(nome_jogador):
                         if vilao in viloes:
                             viloes.remove(vilao)
                             viloes.append(Vilao(img_vilao))
+                            pontuacao+=10
                         elif vilao in viloes_fortes:
                             viloes_fortes.remove(vilao)
                             viloes_fortes.append(VilaoForte(img_vilao_forte))
-                        pontuacao += 10
+                        pontuacao += 25
                     break
 
         # Atualiza feitiços

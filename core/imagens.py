@@ -12,7 +12,7 @@ def carregar_personagem(nome_arquivo, tamanho=(60, 60)):
     imagem = pygame.image.load(caminho).convert_alpha()
     return pygame.transform.scale(imagem, tamanho)
 
-def carregar_tiro(nome_arquivo="tiro.png", tamanho=(30, 10)):
+def carregar_tiro(nome_arquivo="tiro.png", tamanho=(30, 30)):
     caminho = os.path.join(IMAGENS_PATH, nome_arquivo)
     imagem = pygame.image.load(caminho).convert_alpha()
     return pygame.transform.scale(imagem, tamanho)
