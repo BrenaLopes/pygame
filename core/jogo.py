@@ -72,9 +72,10 @@ def executar_jogo(nome_jogador):
             if evento.type == pygame.QUIT:
                 rodando = False
             elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_SPACE:
-                if moedas_coletadas >= 5:
+                if moedas_coletadas >= 5 and jogador.pode_atirar():
                     novo_tiro = Projeto(jogador.x + jogador.largura, jogador.y + jogador.altura // 2)
                     feitiços.append(novo_tiro)
+                    jogador.atirar()
                     tocar_som_tiro()
 
         teclas = pygame.key.get_pressed()
