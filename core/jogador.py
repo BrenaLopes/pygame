@@ -13,10 +13,9 @@ class Jogador:
         self.vida = 100
         self.rect = pygame.Rect(self.x, self.y, self.largura, self.altura)
 
-        # Controle de tiros
         self.tiros_restantes = 8
-        self.cooldown_ativo_ate = 0       # após 8 tiros
-        self.tempo_proximo_tiro = 0       # tempo mínimo entre dois tiros
+        self.cooldown_ativo_ate = 0
+        self.tempo_proximo_tiro = 0
 
     def mover(self, teclas):
         if teclas[pygame.K_UP] and self.y > 0:
@@ -27,28 +26,27 @@ class Jogador:
 
     def pode_atirar(self):
         agora = time.time()
-
-        # Em cooldown final
-        if agora < self.cooldown_ativo_ate:
-            return False
-
-        # Entre tiros (0.3 segundos)
-        if agora < self.tempo_proximo_tiro:
-            return False
-
-        # Se os 8 tiros acabaram e cooldown passou, recarrega
-        if self.tiros_restantes == 0:
-            self.tiros_restantes = 8
-
-        return True
+        return (
+            self.tiros_restantes > 0 and
+            agora >= self.tempo_proximo_tiro and
+            agora >= self.cooldown_ativo_ate
+        )
 
     def atirar(self):
         agora = time.time()
-        if self.tiros_restantes > 0:
-            self.tiros_restantes -= 1
-            self.tempo_proximo_tiro = agora + 0.3  # intervalo entre tiros
-            if self.tiros_restantes == 0:
-                self.cooldown_ativo_ate = agora + 2  # cooldown final de 2s
+        self.tiros_restantes -= 1
+        self.tempo_proximo_tiro = agora + 0.2
+        if self.tiros_restantes == 0:
+            self.cooldown_ativo_ate = agora + 2
+
+    def ganhar_bala(self):
+        if self.tiros_restantes < 8 and time.time() >= self.cooldown_ativo_ate:
+            self.tiros_restantes += 1
+
+    def recarregar_se_preciso(self):
+        agora = time.time()
+        if self.tiros_restantes == 0 and agora >= self.cooldown_ativo_ate:
+            self.tiros_restantes = 8
 
     def desenhar(self, tela):
         tela.blit(self.imagem, (self.x, self.y))

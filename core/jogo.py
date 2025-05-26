@@ -56,7 +56,6 @@ def executar_jogo(nome_jogador):
 
     start_time = time.time()
     tempo_para_moedas = 7
-    tempo_para_atirar = 20
     tempo_para_viloes_atirarem = 50
     tempo_para_viloes_fortes = tempo_para_viloes_atirarem + 20
     invulneravel_ate = start_time + 10
@@ -80,6 +79,7 @@ def executar_jogo(nome_jogador):
 
         teclas = pygame.key.get_pressed()
         jogador.mover(teclas)
+        jogador.recarregar_se_preciso()
 
         if tempo_jogo >= tempo_para_moedas and random.random() < 0.02:
             moedas.append(Moeda(img_moeda))
@@ -91,6 +91,7 @@ def executar_jogo(nome_jogador):
             elif jogador.rect.colliderect(moeda.rect):
                 moedas.remove(moeda)
                 moedas_coletadas += 1
+                jogador.ganhar_bala()
                 tocar_som_moeda()
                 if moedas_coletadas >= moedas_para_curar:
                     jogador.vida = min(100, jogador.vida + 20)
@@ -186,14 +187,10 @@ def executar_jogo(nome_jogador):
             tela.blit(fundo_atual, (0, 0))
 
         jogador.desenhar(tela)
-        for v in viloes + viloes_fortes:
-            v.desenhar(tela)
-        for f in feitiços:
-            f.desenhar(tela, img_tiro)
-        for t in tiros_vilao:
-            pygame.draw.rect(tela, AMARELO, t.rect)
-        for moeda in moedas:
-            moeda.desenhar(tela)
+        for v in viloes + viloes_fortes: v.desenhar(tela)
+        for f in feitiços: f.desenhar(tela, img_tiro)
+        for t in tiros_vilao: pygame.draw.rect(tela, AMARELO, t.rect)
+        for moeda in moedas: moeda.desenhar(tela)
 
         desenhar_barra_vida(tela, jogador.vida)
         tela.blit(fonte.render(f"Pontos: {pontuacao}", True, BRANCO), (10, 10))
@@ -203,6 +200,14 @@ def executar_jogo(nome_jogador):
         if moedas_coletadas < 5:
             aviso = fonte_aviso.render(f'Pegue {5 - moedas_coletadas} pomos de ouro para atirar!', True, DOURADO)
             tela.blit(aviso, ((LARGURA - aviso.get_width()) // 2, ALTURA - 40))
+
+        if jogador.tiros_restantes == 0 and time.time() < jogador.cooldown_ativo_ate:
+            cor_balas = VERMELHO
+        else:
+            cor_balas = AMARELO
+
+        texto_balas = fonte.render(f'Balas: {jogador.tiros_restantes}/8', True, cor_balas)
+        tela.blit(texto_balas, (10, ALTURA - texto_balas.get_height() - 10))
 
         pygame.display.flip()
 
