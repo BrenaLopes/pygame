@@ -2,7 +2,7 @@ import os
 
 # TELA
 LARGURA = 1500
-ALTURA = 700
+ALTURA = 750
 FPS = 30
 
 # CORES
