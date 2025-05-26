@@ -163,7 +163,7 @@ def executar_jogo(nome_jogador):
             elif t.rect.right < 0:
                 tiros_vilao.remove(t)
 
-        # CENÁRIO com transições suaves
+        # CENÁRIO com transições suaves (suavização gerada por IA- utilização do fade)
         if tempo_jogo < tempo_para_viloes_atirarem:
             fundo_atual = cenario_dia
             proximo_fundo = cenario_tarde
