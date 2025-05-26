@@ -11,6 +11,7 @@ from core.sons import (
     tocar_musica_de_fundo,
     tocar_som_tiro,
     tocar_som_dano,
+    tocar_som_moeda,
 )
 
 def desenhar_barra_vida(tela, vida):
@@ -28,12 +29,10 @@ def executar_jogo(nome_jogador):
     pygame.display.set_caption("Harry Potter e as Relíquias da Morte")
     clock = pygame.time.Clock()
 
-    # Cenários
     cenario_dia = carregar_cenario("cenario_dia.png")
     cenario_tarde = carregar_cenario("cenario_tarde.png")
     cenario_noite = carregar_cenario("cenario_noite.jpg")
 
-    # Imagens
     img_bruxo = carregar_personagem("Harry_Potter.png")
     img_tiro = carregar_tiro()
     img_vilao = carregar_personagem("vilao.png", tamanho=(80, 80))
@@ -81,7 +80,6 @@ def executar_jogo(nome_jogador):
         teclas = pygame.key.get_pressed()
         jogador.mover(teclas)
 
-        # Moedas
         if tempo_jogo >= tempo_para_moedas and random.random() < 0.02:
             moedas.append(Moeda(img_moeda))
 
@@ -92,27 +90,24 @@ def executar_jogo(nome_jogador):
             elif jogador.rect.colliderect(moeda.rect):
                 moedas.remove(moeda)
                 moedas_coletadas += 1
+                tocar_som_moeda()
                 if moedas_coletadas >= moedas_para_curar:
                     jogador.vida = min(100, jogador.vida + 20)
                     moedas_para_curar += cura_a_cada
 
-        # Vilões comuns
         if len(viloes) < 5:
             novo = Vilao(img_vilao)
             novo.vel_x = max(-12, -3 - pontuacao // 50)
             viloes.append(novo)
 
-        # Vilões fortes
         if tempo_jogo >= tempo_para_viloes_fortes and len(viloes_fortes) < 2:
             viloes_fortes.append(VilaoForte(img_vilao_forte))
 
         for vilao in viloes + viloes_fortes:
             vilao.mover()
-
             if tempo_jogo >= tempo_para_viloes_atirarem and random.random() < 0.01:
                 tiros_vilao.append(TiroVilao(vilao.rect.x, vilao.rect.centery))
 
-            # Jogador colidiu com vilão
             if vilao.rect.colliderect(jogador.rect):
                 if time.time() >= invulneravel_ate:
                     jogador.vida -= 10
@@ -126,7 +121,6 @@ def executar_jogo(nome_jogador):
                 if jogador.vida <= 0:
                     rodando = False
 
-            # Vilão saiu da tela
             if vilao.rect.right < 0:
                 if vilao in viloes:
                     viloes.remove(vilao)
@@ -135,7 +129,6 @@ def executar_jogo(nome_jogador):
                     viloes_fortes.remove(vilao)
                     viloes_fortes.append(VilaoForte(img_vilao_forte))
 
-            # Feitiço acertou vilão
             for f in feitiços[:]:
                 if vilao.rect.colliderect(f.rect):
                     feitiços.remove(f)
@@ -169,7 +162,6 @@ def executar_jogo(nome_jogador):
             elif t.rect.right < 0:
                 tiros_vilao.remove(t)
 
-        # Transição de cenário
         if tempo_jogo < tempo_para_viloes_atirarem:
             fundo_atual = cenario_dia
             proximo_fundo = cenario_tarde
@@ -192,7 +184,6 @@ def executar_jogo(nome_jogador):
         else:
             tela.blit(fundo_atual, (0, 0))
 
-        # Desenhar elementos
         jogador.desenhar(tela)
         for v in viloes + viloes_fortes:
             v.desenhar(tela)
@@ -205,7 +196,6 @@ def executar_jogo(nome_jogador):
 
         desenhar_barra_vida(tela, jogador.vida)
         tela.blit(fonte.render(f"Pontos: {pontuacao}", True, BRANCO), (10, 10))
-
         texto_moedas = fonte.render(f'Pomos de ouro: {moedas_coletadas}', True, AMARELO)
         tela.blit(texto_moedas, (LARGURA - texto_moedas.get_width() - 10, 10))
 
