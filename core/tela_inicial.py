@@ -1,7 +1,8 @@
 import pygame
 import os
 from config import LARGURA, ALTURA, FPS, IMAGENS_PATH
-
+from core.tela_de_instruções import tela_instrucoes
+from core.jogo import executar_jogo
 def tela_inicial():
     largura_botao = 300
     altura_botao = 50
@@ -40,7 +41,6 @@ def tela_inicial():
             tela.blit(brilho, botao_jogar.topleft)  # centralizado corretamente
 
 
-
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 pygame.quit()
@@ -65,6 +65,11 @@ def tela_inicial():
                 else:
                     if len(nome) < 20:
                         nome += evento.unicode
+
+        if botao_instrucoes.collidepoint(mouse_pos):
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                tela_instrucoes()
+
 
         pygame.draw.rect(tela, cor_input, input_box, 2)
         texto_surface = fonte.render(nome, True, cor_input_ativa)
