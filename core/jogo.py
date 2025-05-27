@@ -60,6 +60,9 @@ def executar_jogo(nome_jogador):
     tempo_para_viloes_fortes = tempo_para_viloes_atirarem + 20
     invulneravel_ate = start_time + 10
     transicao_duracao = 3
+    aviso_inicial_mostrado = False
+    tempo_inicio_aviso_tiro = None
+
 
     rodando = True
 
@@ -71,7 +74,7 @@ def executar_jogo(nome_jogador):
             if evento.type == pygame.QUIT:
                 rodando = False
             elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_SPACE:
-                if moedas_coletadas >= 5 and jogador.pode_atirar():
+                if moedas_coletadas >= 3 and jogador.pode_atirar():
                     novo_tiro = Projeto(jogador.x + jogador.largura, jogador.y + jogador.altura // 2)
                     feitiços.append(novo_tiro)
                     jogador.atirar()
@@ -99,7 +102,7 @@ def executar_jogo(nome_jogador):
 
         if len(viloes) < 5:
             novo = Vilao(img_vilao)
-            novo.vel_x = max(-12, -3 - pontuacao // 50)
+            novo.vel_x = max(-12, -3 - pontuacao // 20)
             viloes.append(novo)
 
         if tempo_jogo >= tempo_para_viloes_fortes and len(viloes_fortes) < 2:
@@ -198,9 +201,21 @@ def executar_jogo(nome_jogador):
         texto_moedas = fonte.render(f'Pomos de ouro: {moedas_coletadas}', True, AMARELO)
         tela.blit(texto_moedas, (LARGURA - texto_moedas.get_width() - 10, 10))
 
-        if moedas_coletadas < 5:
-            aviso = fonte_aviso.render(f'Pegue {5 - moedas_coletadas} pomos de ouro para atirar!', True, DOURADO)
+        
+        # AVISOS DE TUTORIAL (INICIAL E DE TIRO)
+        if moedas_coletadas < 3:
+            aviso = fonte_aviso.render(f'Pegue {3 - moedas_coletadas} pomos de ouro para atirar!', True, DOURADO)
             tela.blit(aviso, ((LARGURA - aviso.get_width()) // 2, ALTURA - 40))
+        else:
+            if not aviso_inicial_mostrado:
+                tempo_inicio_aviso_tiro = time.time()
+                aviso_inicial_mostrado = True
+
+            tempo_agora = time.time()
+            if tempo_inicio_aviso_tiro and tempo_agora - tempo_inicio_aviso_tiro <= 15:
+                aviso = fonte_aviso.render('Pressione ESPAÇO para atirar!', True, DOURADO)
+                tela.blit(aviso, ((LARGURA - aviso.get_width()) // 2, ALTURA - 40))
+
 
         if jogador.tiros_restantes == 0 and time.time() < jogador.cooldown_ativo_ate:
             cor_balas = VERMELHO
