@@ -1,8 +1,10 @@
 import pygame
-
+from pathlib import Path
 def tocar_musica_de_fundo():
     pygame.mixer.init()
-    pygame.mixer.music.load("pygame\sons\Música HP fundo.mp3")
+    pygame.mixer.music.load("sons\Música HP fundo.mp3")
+    sound_path = Path("sons") / "Música HP fundo.mp3"
+
     pygame.mixer.music.set_volume(0.6)
     pygame.mixer.music.play(-1)
 
