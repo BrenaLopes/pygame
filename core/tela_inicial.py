@@ -1,10 +1,11 @@
 import pygame
 import os
 from config import LARGURA, ALTURA, FPS, IMAGENS_PATH
-
+from core.tela_de_instruções import tela_instrucoes
+from core.jogo import executar_jogo
 def tela_inicial():
     largura_botao = 300
-    altura_botao = 50
+    altura_botao = 40
     espaco_entre_botoes = 20
     altura_base = ALTURA // 2
 
@@ -18,7 +19,7 @@ def tela_inicial():
     fundo = pygame.transform.scale(fundo, (LARGURA, ALTURA))
 
     fonte = pygame.font.SysFont("Courier New", 28)
-    input_box = pygame.Rect(890, 650, 300, 40)
+    input_box = pygame.Rect(890, 690, 300, 40)
     cor_input_ativa = pygame.Color("white")
     cor_input_inativa = pygame.Color("gray")
     cor_input = cor_input_inativa
@@ -26,8 +27,8 @@ def tela_inicial():
     nome = ""
     ativo = False
 
-    botao_jogar = pygame.Rect(LARGURA//2 - largura_botao//2, altura_base, largura_botao, altura_botao)
-    botao_instrucoes = pygame.Rect(LARGURA // 2 - largura_botao // 2, altura_base + altura_botao + espaco_entre_botoes, largura_botao, altura_botao)
+    botao_jogar = pygame.Rect(520, 440 , largura_botao, altura_botao)
+    botao_instrucoes = pygame.Rect(520, 530, largura_botao, altura_botao)
     botao_sair = pygame.Rect(LARGURA // 2 - largura_botao // 2, altura_base + 2 * (altura_botao + espaco_entre_botoes), largura_botao, altura_botao)
     
     while True:
@@ -39,7 +40,10 @@ def tela_inicial():
             brilho.fill((255, 255, 255, 60))  # branco translúcido
             tela.blit(brilho, botao_jogar.topleft)  # centralizado corretamente
 
-
+        if botao_instrucoes.collidepoint(mouse_pos):
+            brilho = pygame.Surface((botao_instrucoes.width, botao_instrucoes.height), pygame.SRCALPHA)
+            brilho.fill((255, 255, 255, 60))
+            tela.blit(brilho, botao_instrucoes.topleft)
 
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
@@ -65,6 +69,11 @@ def tela_inicial():
                 else:
                     if len(nome) < 20:
                         nome += evento.unicode
+
+        if botao_instrucoes.collidepoint(mouse_pos):
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                tela_instrucoes()
+
 
         pygame.draw.rect(tela, cor_input, input_box, 2)
         texto_surface = fonte.render(nome, True, cor_input_ativa)

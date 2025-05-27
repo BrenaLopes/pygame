@@ -13,6 +13,7 @@ from core.sons import (
     tocar_som_dano,
     tocar_som_moeda,
 )
+from core.tela_game_over import tela_game_over
 
 def desenhar_barra_vida(tela, vida):
     largura_barra = 200
@@ -226,6 +227,12 @@ def executar_jogo(nome_jogador):
         tela.blit(texto_balas, (10, ALTURA - texto_balas.get_height() - 10))
 
         pygame.display.flip()
+        
+        if jogador.vida<=0:
+            rodando =False
+
+    
+            tela_game_over()
 
     from core.ranking import salvar_pontuacao, exibir_ranking
     salvar_pontuacao(nome_jogador, pontuacao)
