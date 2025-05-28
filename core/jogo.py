@@ -218,7 +218,7 @@ def executar_jogo(nome_jogador):
 
         
         # AVISOS DE TUTORIAL (INICIAL E DE TIRO)
-        if moedas_coletadas < 0:
+        if moedas_coletadas < 3:
             aviso = fonte_aviso.render(f'Pegue {3 - moedas_coletadas} pomos de ouro para atirar!', True, DOURADO)
             tela.blit(aviso, ((LARGURA - aviso.get_width()) // 2, ALTURA - 40))
         else:
