@@ -38,6 +38,10 @@ class Jogador:
         self.tempo_proximo_tiro = agora + 0.2
         if self.tiros_restantes == 0:
             self.cooldown_ativo_ate = agora + 2
+        animacao_tiro()
+
+    def animacao_tiro():
+        
 
     def ganhar_bala(self):
         if self.tiros_restantes < 8 and time.time() >= self.cooldown_ativo_ate:
