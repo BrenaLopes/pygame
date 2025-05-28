@@ -48,5 +48,6 @@ class Jogador:
         if self.tiros_restantes == 0 and agora >= self.cooldown_ativo_ate:
             self.tiros_restantes = 8
 
-    def desenhar(self, tela):
-        tela.blit(self.imagem, (self.x, self.y))
+    def desenhar(self, tela, offset_y=0):
+        tela.blit(self.imagem, (self.x, self.y + offset_y))
+

@@ -16,8 +16,9 @@ class Vilao:
     def mover(self):
         self.rect.x += self.vel_x
 
-    def desenhar(self, tela):
-        tela.blit(self.imagem, (self.rect.x, self.rect.y))
+    def desenhar(self, tela, offset_y=0):
+        tela.blit(self.imagem, (self.rect.x, self.rect.y + offset_y))
+
         
 
 class VilaoForte(Vilao):

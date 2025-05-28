@@ -14,6 +14,8 @@ from core.sons import (
     tocar_som_moeda,
 )
 from core.tela_game_over import tela_game_over
+import math
+
 
 def desenhar_barra_vida(tela, vida):
     largura_barra = 200
@@ -191,8 +193,14 @@ def executar_jogo(nome_jogador):
         else:
             tela.blit(fundo_atual, (0, 0))
 
-        jogador.desenhar(tela)
-        for v in viloes + viloes_fortes: v.desenhar(tela)
+        tempo_atual = pygame.time.get_ticks() / 1000  # tempo em segundos
+        offset = math.sin(tempo_atual *5) * 14  # frequência e amplitude da flutuação
+        jogador.desenhar(tela, offset_y=offset)
+
+        tempo_atual = pygame.time.get_ticks() / 1000  # tempo em segundos
+        for idx, v in enumerate(viloes + viloes_fortes):
+            offset = math.sin(tempo_atual * 5 + idx) * 12  # oscila verticalmente, defasada pelo índice
+            v.desenhar(tela, offset_y=offset)
         for f in feitiços: f.desenhar(tela, img_tiro)
         for t in tiros_vilao: pygame.draw.rect(tela, AMARELO, t.rect)
         for moeda in moedas: moeda.desenhar(tela)
