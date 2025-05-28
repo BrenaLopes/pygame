@@ -8,7 +8,7 @@ def tela_instrucoes():
     pygame.display.set_caption("Instruções")
     clock = pygame.time.Clock()
 
-    fundo = pygame.image.load('assets/imagens/Tela_de_intruções.png')
+    fundo = pygame.image.load(os.path.join(IMAGENS_PATH, "Tela_de_intruções.png"))
     fundo = pygame.transform.scale(fundo, (LARGURA, ALTURA))
 
     botao_voltar = pygame.Rect(598, ALTURA - 142, 300, 40)
@@ -37,3 +37,4 @@ def tela_instrucoes():
                     rodando = False
 
         pygame.display.flip()
+
