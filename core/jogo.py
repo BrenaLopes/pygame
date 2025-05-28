@@ -55,7 +55,7 @@ def executar_jogo(nome_jogador):
     moedas = []
 
     pontuacao = 0
-    moedas_coletadas = 3
+    moedas_coletadas = 0
     moedas_para_curar = 10
     cura_a_cada = 10
 
@@ -199,7 +199,7 @@ def executar_jogo(nome_jogador):
 
         tempo_atual = pygame.time.get_ticks() / 1000  # tempo em segundos
         offset = math.sin(tempo_atual *5) * 14  # frequência e amplitude da flutuação
-        
+
         jogador.atualizar_animacao()
         jogador.desenhar(tela)
 
