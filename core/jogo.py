@@ -1,3 +1,4 @@
+# jogo.py
 import pygame
 import time
 import random
@@ -5,7 +6,7 @@ from config import *
 from core.jogador import Jogador
 from core.vilao import Vilao, VilaoForte
 from core.projeto import Projeto, TiroVilao
-from core.imagens import carregar_personagem, carregar_tiro, carregar_cenario
+from core.imagens import carregar_personagem, carregar_tiro, carregar_cenario, carregar_frames_tiro
 from core.moeda import Moeda
 from core.sons import (
     tocar_musica_de_fundo,
@@ -37,6 +38,7 @@ def executar_jogo(nome_jogador):
     cenario_noite = carregar_cenario("cenario_noite.png")
 
     img_bruxo = carregar_personagem("Harry_Potter.png", tamanho=(80, 80))
+    img_animacao_tiro = carregar_frames_tiro(tamanho=(80,80))
     img_tiro = carregar_tiro()
     img_vilao = carregar_personagem("vilao.png", tamanho=(80, 80))
     img_moeda = carregar_personagem("moeda.png", tamanho=(40, 40))
@@ -53,7 +55,7 @@ def executar_jogo(nome_jogador):
     moedas = []
 
     pontuacao = 0
-    moedas_coletadas = 0
+    moedas_coletadas = 3
     moedas_para_curar = 10
     cura_a_cada = 10
 
@@ -78,7 +80,9 @@ def executar_jogo(nome_jogador):
                 rodando = False
             elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_SPACE:
                 if moedas_coletadas >= 3 and jogador.pode_atirar():
-                    novo_tiro = Projeto(jogador.x + jogador.largura, jogador.y + jogador.altura // 2)
+                    # novo_tiro = Projeto(jogador.rect.x + jogador.largura, jogador.rect.y + jogador.altura // 2)
+                    novo_tiro = Projeto(jogador.rect.right, jogador.rect.centery)
+
                     feitiços.append(novo_tiro)
                     jogador.atirar()
                     tocar_som_tiro()
@@ -195,7 +199,9 @@ def executar_jogo(nome_jogador):
 
         tempo_atual = pygame.time.get_ticks() / 1000  # tempo em segundos
         offset = math.sin(tempo_atual *5) * 14  # frequência e amplitude da flutuação
-        jogador.desenhar(tela, offset_y=offset)
+        
+        jogador.atualizar_animacao()
+        jogador.desenhar(tela)
 
         tempo_atual = pygame.time.get_ticks() / 1000  # tempo em segundos
         for idx, v in enumerate(viloes + viloes_fortes):
@@ -212,7 +218,7 @@ def executar_jogo(nome_jogador):
 
         
         # AVISOS DE TUTORIAL (INICIAL E DE TIRO)
-        if moedas_coletadas < 3:
+        if moedas_coletadas < 0:
             aviso = fonte_aviso.render(f'Pegue {3 - moedas_coletadas} pomos de ouro para atirar!', True, DOURADO)
             tela.blit(aviso, ((LARGURA - aviso.get_width()) // 2, ALTURA - 40))
         else:
