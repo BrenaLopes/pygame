@@ -13,15 +13,18 @@ def carregar_personagem(nome_arquivo, tamanho=(60, 60)):
     return pygame.transform.scale(imagem, tamanho)
 
 def carregar_frames_tiro(prefixo="harry_tiro_", quantidade=3, tamanho=(80, 80)):
-    caminho_pasta = os.path.join("assets", "imagens", "tiro")
+    caminho_pasta = os.path.join(IMAGENS_PATH, "tiro")
     frames = []
     for i in range(1, quantidade + 1):
         nome_arquivo = f"{prefixo}{i}.png"
         caminho = os.path.join(caminho_pasta, nome_arquivo)
+        if not os.path.exists(caminho):
+            raise FileNotFoundError(f"Arquivo não encontrado: {caminho}")
         imagem = pygame.image.load(caminho).convert_alpha()
         imagem = pygame.transform.scale(imagem, tamanho)
         frames.append(imagem)
     return frames
+
 
 
 def carregar_tiro(nome_arquivo="tiro.png", tamanho=(30, 30)):
