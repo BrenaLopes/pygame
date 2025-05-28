@@ -17,11 +17,15 @@ def salvar_pontuacao(nome, pontos):
         ranking = []
 
     ranking.append({"nome": nome, "pontos": pontos})
-    if len(ranking) > 5:
-        ranking = []
+    # Ordena pela pontuação decrescente
+    ranking = sorted(ranking, key=lambda x: x["pontos"], reverse=True)
+    # Mantém apenas os 8 primeiros colocados
+    ranking = ranking[:8]
 
     with open(ARQUIVO_RANKING, "w") as f:
         json.dump(ranking, f, indent=4)
+
+    
 
 def exibir_ranking():
     pygame.init()
@@ -38,8 +42,10 @@ def exibir_ranking():
     if os.path.exists(ARQUIVO_RANKING):
         with open(ARQUIVO_RANKING, "r") as f:
             ranking = json.load(f)
+        ranking = sorted(ranking, key=lambda x: x["pontos"], reverse=True)
     else:
         ranking = []
+
 
     rodando = True
     while rodando:
