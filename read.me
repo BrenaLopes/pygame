@@ -1,0 +1,61 @@
+# Harry Potter: Batalha de Feitiços
+
+#Descrição 
+Jogo 2D desenvolvido com Pygame em que o jogador, representando Harry Potter, enfrenta vilões, coleta pomos de ouro e dispara feitiços
+O jogo possui animações, flutuação dos personagens e sistema de ranking.
+
+
+
+## Como Jogar
+
+- Seta para cima/baixo: mover o personagem.
+- Espaço:disparar feitiço (necessário coletar 3 pomos antes).
+- Enter: iniciar ou sair de telas.
+- ESC: sair da tela de instruções.
+
+
+## Como Executar
+
+1. Clone o repositório ou extraia os arquivos.
+2. Acesse a pasta raiz:
+
+     "pygame Harry Potter/pygame"
+
+3. Instale o pygame:
+
+    pip install pygame
+    
+
+4. Execute o jogo:
+
+    
+    python main.py
+
+
+## Estrutura do Projeto
+pygame/
+main.py # Arquivo principal que inicia o jogo
+config.py # Configurações gerais (tela, caminhos, cores)
+core/ # Lógica do jogo
+jogador.py # Classe Jogador
+vilao.py # Vilões e Vilões Fortes
+projeto.py # Tiros do jogador e dos vilões
+moeda.py # Moedas (pomos de ouro)
+sons.py # Sons do jogo
+imagens.py # Carregamento de sprites
+ranking.py # Sistema de ranking
+tela_game_over.py # Tela de fim de jogo
+tela_instrucoes.py # Tela de instruções
+assets/
+imagens/ # Sprites do jogo (cenários, personagens, etc.)
+sons/ # Arquivos de áudio
+dados/
+ranking.json # Ranking salvo localmente
+
+
+
+## Autoria
+
+Desenvolvido por Brena Lopes Ferro, Mylena Vitória Rosa do Prado e David Hong Wei Monteiro Wong
+Este jogo foi feito com fins educacionais e de prática em Python com Pygame.
+
