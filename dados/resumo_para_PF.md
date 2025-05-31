@@ -154,4 +154,7 @@ if e if ---- testa os dois independente se for TRUE ou FALSE
     tupla = (1,2,3)
     lista = list(tupla)
     print(lista)    #SAÍDA: [1,2,3]
-    
+4) sum
+    lista = [1,2,3]
+    soma = sum(lista)  
+    print(soma)    #saída: 6
