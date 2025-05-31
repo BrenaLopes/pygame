@@ -6,4 +6,3 @@ from core.tela_de_instruções import tela_instrucoes
 if __name__ == "__main__":
     nome = tela_inicial()
     executar_jogo(nome) 
-f
